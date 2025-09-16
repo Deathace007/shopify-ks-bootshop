@@ -59,13 +59,9 @@
           "settings": {
             "container_max_width": "",
             "logo": "shopify://shop_images/WhatsApp_Image_2025-09-04_at_6.13.35_PM-removebg-preview.png",
-            "logo_transparent": "shopify://shop_images/WhatsApp_Image_2025-09-04_at_6.13.35_PM-removebg-preview.png",
             "logo_height": 34,
             "main_menu": "main-menu",
-            "collections_menu": "footer",
-            "social_icons": false,
-            "pt": 2,
-            "pb": 2
+            "social_icons": false
           }
         },
         "069e870e-aed4-4929-bf73-c0daca8be18e": {
@@ -73,9 +69,7 @@
           "settings": {
             "container_max_width": "",
             "logo_height": 32,
-            "main_menu": "",
-            "pt": 5,
-            "pb": 5
+            "main_menu": ""
           }
         }
       },
@@ -84,15 +78,33 @@
         "069e870e-aed4-4929-bf73-c0daca8be18e"
       ],
       "settings": {
-        "bg_color": "bg-body",
-        "bg_opacity": 100,
-        "bg_gradient": "",
-        "text_color": "text-body",
+        "background_type": "color",
+        "background_color": "#800020",
+        "background_gradient": "linear-gradient(136deg, rgba(NaN, NaN, NaN, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.1,
+        "text_color": "#000000",
         "border_top_width": 0,
         "border_bottom_width": 0,
-        "border_color": "border-body",
-        "border_opacity": 100,
-        "shadow": "shadow-sm"
+        "border_color": "#e0e0e0",
+        "enable_shadow": true,
+        "desktop_font": "sans_serif_n4",
+        "desktop_font_size": 16,
+        "desktop_font_weight": 400,
+        "desktop_link_color": "#ffffff",
+        "desktop_link_hover_color": "#ffffff",
+        "icon_size": 22,
+        "icon_color": "#ffffff",
+        "icon_hover_color": "#000000",
+        "cart_badge_bg": "#b1d0ff",
+        "cart_badge_text": "#ffffff",
+        "mobile_menu_bg": "#b1d0ff",
+        "mobile_link_color": "#000000",
+        "mobile_link_hover_color": "#800020",
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "margin_top": 0,
+        "margin_bottom": 0
       }
     }
   },
