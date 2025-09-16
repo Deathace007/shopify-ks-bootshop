@@ -65,6 +65,23 @@
   #offcanvas-menu .nav-link:hover {
     color: {{ section.settings.mobile_link_hover_color }};
   }
+
+  /* New Desktop Layout Styles */
+  .desktop-nav-container-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+  }
+  .desktop-nav-left-{{ section.id }} {
+    justify-self: start;
+  }
+  .desktop-nav-center-{{ section.id }} {
+    justify-self: center;
+  }
+  .desktop-nav-right-{{ section.id }} {
+    justify-self: end;
+  }
 {%- endstyle -%}
 
 <navbar-wrapper 
@@ -81,7 +98,7 @@
         {{ block.shopify_attributes }}>
         <div 
           class="container"
-          style="max-width: {{ block.settings.container_max_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+          style="max-width: {{ block.settings.container_max_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; padding-left: {{ section.settings.padding_horizontal }}px; padding-right: {{ section.settings.padding_horizontal }}px;">
           <div class="row align-items-center">
             <div class="col-5">
               <ul class="nav flex-nowrap">
@@ -151,16 +168,15 @@
         {{ block.shopify_attributes }}>
         <div 
           class="container"
-          style="max-width: {{ block.settings.container_max_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
-          <div
-            class="row align-items-center flex-grow-1">
-            <div class="col-4">
-              {% render 'navbar-logo', block: block %}
-            </div>
-            <div class="col-10">
+          style="max-width: {{ block.settings.container_max_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; padding-left: {{ section.settings.padding_horizontal }}px; padding-right: {{ section.settings.padding_horizontal }}px;">
+          <div class="desktop-nav-container-{{ section.id }}">
+            <div class="desktop-nav-left-{{ section.id }}">
               {% render 'navbar-desktop-menu', block: block %}
             </div>
-            <div class="col-4">
+            <div class="desktop-nav-center-{{ section.id }}">
+              {% render 'navbar-logo', block: block %}
+            </div>
+            <div class="desktop-nav-right-{{ section.id }}">
               {% render 'navbar-desktop-icons', block: block %}
             </div>
           </div>
@@ -366,6 +382,13 @@
       "min": 0, "max": 50, "step": 2, "unit": "px",
       "default": 10
     },
+     {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Horizontal Padding",
+      "min": 0, "max": 50, "step": 2, "unit": "px",
+      "default": 14
+    },
     {
       "type": "range",
       "id": "margin_top",
@@ -456,3 +479,4 @@
   ]
 }
 {% endschema %}
+
