@@ -23,10 +23,10 @@
             "subtitle": "Developed by KondaSoft",
             "title": "Welcome to KS BootShop Theme",
             "description": "<p>Free Shopify Theme inspired by simplicity and elegance.</p>",
-            "btn_primary_text": "Get theme",
-            "btn_primary_url": "https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop",
-            "btn_secondary_text": "Learn more",
-            "btn_secondary_url": "https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop"
+            "btn_primary_text": "Shop with Sareeeba",
+            "btn_primary_url": "shopify://collections",
+            "btn_secondary_text": "",
+            "btn_secondary_url": ""
           }
         }
       },
