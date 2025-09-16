@@ -5,69 +5,101 @@
   endif
 %}
 
-<div 
-  id="hero-carousel-{{ section.id }}" 
+<div
+  id="hero-carousel-{{ section.id }}"
   class="
-    hero-carousel 
-    {{ section.settings.bg_color }} 
+    hero-carousel
+    {{ section.settings.bg_color }}
     {{ section.settings.bg_gradient }}
-    {{ section.settings.text_color }} 
+    {{ section.settings.text_color }}
     {{ section.settings.border_top_width | prepend: 'border-top-' }}
     {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
-    {{ section.settings.border_color }} 
-    {{ section.settings.pb | prepend: 'pb-' }} 
+    {{ section.settings.border_color }}
+    {{ section.settings.pb | prepend: 'pb-' }}
     {{ section.settings.pb | prepend: 'pb-' }}
   "
   style="
     --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
     --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
-  ">
-  <div 
-    id="carousel-{{ section.id }}" 
+  "
+>
+  <div
+    id="carousel-{{ section.id }}"
     class="carousel {{ section.settings.carousel_transition }} {{ section.settings.carousel_effect }}"
     style="--transition-duration: {{ section.settings.carousel_transition_duration | append: 'ms' }};"
     data-bs-ride="{% if section.settings.carousel_autoplay > 0 %}carousel{% else %}false{% endif %}"
     data-bs-interval="{{ section.settings.carousel_autoplay | times: 1000 }}"
-    data-bs-pause="false">
+    data-bs-pause="false"
+  >
     <div class="carousel-inner">
       {% for block in section.blocks %}
-        {% liquid 
+        {% liquid
           if section.index > 1 or forloop.index > 1
             assign media_loading = 'lazy'
           else
             assign media_loading = 'eager'
           endif
         %}
-        <div 
-          class="carousel-item {% if forloop.first %}active{% endif %}" 
-          data-index="{{ forloop.index0 }}" 
-          {{ block.shopify_attributes }}>
-          <div 
-            class="media-wrapper" 
+        <div
+          class="carousel-item {% if forloop.first %}active{% endif %}"
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          <div
+            class="media-wrapper"
             style="
               --overlay-color-rgb: {{ block.settings.overlay_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
               --overlay-opacity: {{ block.settings.overlay_opacity | append: '%' }};
-              --overlay-blur: {{ block.settings.overlay_blur | append: 'px' }}">
-            {% if block.settings.img_mobile != blank or block.settings.img_desktop != blank %}
+              --overlay-blur: {{ block.settings.overlay_blur | append: 'px' }}"
+          >
+            {%- comment -%} CODE MODIFIED: Added logic to check for and render videos. {%- endcomment -%}
+            {% if block.settings.video_mobile != blank or block.settings.video_desktop != blank %}
               <div class="d-tablet-none">
-                <img 
+                {{
+                  block.settings.video_mobile
+                  | video_tag:
+                    class: 'carousel-media',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    style: media_mobile_height
+                }}
+              </div>
+              <div class="d-none d-tablet-block">
+                {{
+                  block.settings.video_desktop
+                  | video_tag:
+                    class: 'carousel-media',
+                    autoplay: true,
+                    loop: true,
+                    muted: true,
+                    playsinline: true,
+                    style: media_desktop_height
+                }}
+              </div>
+            {% elsif block.settings.img_mobile != blank or block.settings.img_desktop != blank %}
+              <div class="d-tablet-none">
+                <img
                   class="carousel-media"
-                  src="{{ block.settings.img_mobile | image_url: width: '800', crop: 'center' }}" 
+                  src="{{ block.settings.img_mobile | image_url: width: '800', crop: 'center' }}"
                   alt=" {{ block.settings.img_mobile.alt }}"
                   width="800"
                   height="{{ 800 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
                   loading="{{ media_loading }}"
-                  style="{{ media_mobile_height }}">
+                  style="{{ media_mobile_height }}"
+                >
               </div>
               <div class="d-none d-tablet-block">
-                <img 
+                <img
                   class="carousel-media"
-                  src="{{ block.settings.img_desktop | image_url: width: '1600', crop: 'center' }}" 
+                  src="{{ block.settings.img_desktop | image_url: width: '1600', crop: 'center' }}"
                   alt=" {{ block.settings.img_desktop.alt }}"
                   width="1600"
                   height="{{ 1600 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
                   loading="{{ media_loading }}"
-                  style="{{ media_desktop_height }}">
+                  style="{{ media_desktop_height }}"
+                >
               </div>
             {% else %}
               {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -75,9 +107,10 @@
             {% endif %}
           </div>
           <div class="carousel-caption {{ section.settings.caption_position }}">
-            <div 
-              class="carousel-caption-inner" 
-              style="max-width: {{ section.settings.caption_max_width | append: 'px' }};">
+            <div
+              class="carousel-caption-inner"
+              style="max-width: {{ section.settings.caption_max_width | append: 'px' }};"
+            >
               {% unless block.settings.subtitle == blank %}
                 <p class="subtitle {{ section.settings.subtitle_font_size }}">
                   {{ block.settings.subtitle }}
@@ -96,16 +129,18 @@
               {% if block.settings.btn_primary_text != blank or block.settings.btn_secondary_text != blank %}
                 <div class="btn-wrapper m-n2">
                   {% unless block.settings.btn_primary_text == blank %}
-                    <a 
-                      class="btn m-2 {{ section.settings.btn_primary_color }} {{ section.settings.btn_font_size }}"  
-                      href="{{ block.settings.btn_primary_url }}">
+                    <a
+                      class="btn m-2 {{ section.settings.btn_primary_color }} {{ section.settings.btn_font_size }}"
+                      href="{{ block.settings.btn_primary_url }}"
+                    >
                       {{ block.settings.btn_primary_text }}
                     </a>
                   {% endunless %}
                   {% unless block.settings.btn_secondary_text == blank %}
-                    <a 
-                      class="btn m-2 {{ section.settings.btn_secondary_color }} {{ section.settings.btn_font_size }}"  
-                      href="{{ block.settings.btn_secondary_url }}">
+                    <a
+                      class="btn m-2 {{ section.settings.btn_secondary_color }} {{ section.settings.btn_font_size }}"
+                      href="{{ block.settings.btn_secondary_url }}"
+                    >
                       {{ block.settings.btn_secondary_text }}
                     </a>
                   {% endunless %}
@@ -117,17 +152,19 @@
       {% endfor %}
     </div>
     {% if section.blocks.size > 1 and section.settings.carousel_indicators %}
-      <div 
+      <div
         class="carousel-indicators"
-        style="--duration: {{ section.settings.carousel_autoplay | append: 's' }}">
+        style="--duration: {{ section.settings.carousel_autoplay | append: 's' }}"
+      >
         {% for block in section.blocks %}
-          <button 
-            type="button" 
-            data-bs-target="#carousel-{{ section.id }}" 
-            data-bs-slide-to="{{ forloop.index0 }}" 
-            class="{% if forloop.first == true %}active{% endif %}" 
+          <button
+            type="button"
+            data-bs-target="#carousel-{{ section.id }}"
+            data-bs-slide-to="{{ forloop.index0 }}"
+            class="{% if forloop.first == true %}active{% endif %}"
             aria-current="{% if forloop.first == true %}true{% endif %}"
-            aria-label="{{ 'general.accessibility.slide_no' | t: number: forloop.index }}">
+            aria-label="{{ 'general.accessibility.slide_no' | t: number: forloop.index }}"
+          >
             <span></span>
           </button>
         {% endfor %}
@@ -135,20 +172,22 @@
     {% endif %}
     {% if section.blocks.size > 1 and section.settings.carousel_controls %}
       <div class="d-none d-tablet-block">
-        <button 
-          class="carousel-control carousel-control-prev" 
-          type="button" 
-          data-bs-target="#carousel-{{ section.id }}" 
+        <button
+          class="carousel-control carousel-control-prev"
+          type="button"
+          data-bs-target="#carousel-{{ section.id }}"
           data-bs-slide="prev"
-          aria-label="{{ 'general.accessibility.previous' | t }}">
+          aria-label="{{ 'general.accessibility.previous' | t }}"
+        >
           {% render 'svg-icons', icon: 'chevron-left', size: 24 %}
         </button>
-        <button 
-          class="carousel-control carousel-control-next" 
-          type="button" 
-          data-bs-target="#carousel-{{ section.id }}" 
+        <button
+          class="carousel-control carousel-control-next"
+          type="button"
+          data-bs-target="#carousel-{{ section.id }}"
           data-bs-slide="next"
-          aria-label="{{ 'general.accessibility.next' | t }}">
+          aria-label="{{ 'general.accessibility.next' | t }}"
+        >
           {% render 'svg-icons', icon: 'chevron-right', size: 24 %}
         </button>
       </div>
@@ -159,16 +198,14 @@
 {% if request.design_mode %}
   <script>
     document.addEventListener('shopify:block:select', (event) => {
-      const carousel = event.target.closest('#carousel-{{ section.id }}')
-    
+      const carousel = event.target.closest('#carousel-{{ section.id }}');
+
       if (carousel) {
-        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false })
-          .to(event.target.dataset.index)
+        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false }).to(event.target.dataset.index);
       }
-    })
+    });
   </script>
 {% endif %}
-
 
 {% schema %}
 {
@@ -284,11 +321,11 @@
     },
     {
       "type": "select",
-      "id": "carousel_transition", 
+      "id": "carousel_transition",
       "label": "Transition",
       "options": [
-          { "value": "slide", "label": "Slide" },
-          { "value": "slide carousel-fade", "label": "Fade" }
+        { "value": "slide", "label": "Slide" },
+        { "value": "slide carousel-fade", "label": "Fade" }
       ],
       "default": "slide"
     },
@@ -324,9 +361,8 @@
       ]
     },
     {
-      "type": "header", 
-      "content": "Media (Image/Video)",
-      "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+      "type": "header",
+      "content": "Media (Image/Video)"
     },
     {
       "type": "range",
@@ -357,7 +393,6 @@
       "type": "checkbox",
       "id": "media_full",
       "label": "Full-screen media",
-      "info": "NOTE: Full-screen carousel is supported only in our Premium themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)",
       "default": false
     },
     {
@@ -517,14 +552,12 @@
         {
           "type": "video",
           "id": "video_mobile",
-          "label": "Video - mobile",
-          "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+          "label": "Video - mobile"
         },
         {
           "type": "video",
           "id": "video_desktop",
-          "label": "Video - desktop",
-          "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+          "label": "Video - desktop"
         },
         {
           "type": "header",
@@ -563,22 +596,19 @@
           "type": "text",
           "id": "subtitle",
           "label": "Subtitle",
-          "default": "Optional Subtitle",
-          "info": "Leave empty to disable"
+          "default": "Optional Subtitle"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Welcome to our store",
-          "info": "Leave empty to disable"
+          "default": "Welcome to our store"
         },
         {
           "type": "richtext",
           "id": "description",
           "label": "Description",
-          "default": "<p>An optional description for this slide</p>",
-          "info": "Leave empty to disable"
+          "default": "<p>An optional description for this slide</p>"
         },
         {
           "type": "header",
@@ -587,9 +617,7 @@
         {
           "type": "text",
           "id": "btn_primary_text",
-          "label": "Primary button text",
-          "default": "Primary button",
-          "info": "Leave empty to disable"
+          "label": "Primary button text"
         },
         {
           "type": "url",
@@ -599,9 +627,7 @@
         {
           "type": "text",
           "id": "btn_secondary_text",
-          "label": "Secondary button text",
-          "default": "Secondary button",
-          "info": "Leave empty to disable"
+          "label": "Secondary button text"
         },
         {
           "type": "url",
