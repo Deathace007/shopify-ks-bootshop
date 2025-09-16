@@ -4,10 +4,6 @@
   - Adds extensive customization options for typography, backgrounds, icons, spacing, and more.
 {% endcomment %}
 
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
-
 {%- style -%}
   #navbar-wrapper-{{ section.id }} {
     {% if section.settings.background_type == 'image' and section.settings.background_image != blank %}
