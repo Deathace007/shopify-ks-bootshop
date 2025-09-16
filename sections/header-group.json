@@ -79,7 +79,7 @@
       ],
       "settings": {
         "background_type": "color",
-        "background_color": "#800020",
+        "background_color": "#b1d0ff",
         "background_gradient": "linear-gradient(136deg, rgba(NaN, NaN, NaN, 1) 11%, rgba(250, 13, 253, 1) 84%)",
         "overlay_color": "#000000",
         "overlay_opacity": 0.1,
