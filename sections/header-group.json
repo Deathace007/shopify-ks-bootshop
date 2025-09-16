@@ -58,11 +58,12 @@
           "type": "mobile",
           "settings": {
             "container_max_width": "",
+            "logo": "shopify://shop_images/WhatsApp_Image_2025-09-04_at_6.13.35_PM-removebg-preview.png",
             "logo_transparent": "shopify://shop_images/WhatsApp_Image_2025-09-04_at_6.13.35_PM-removebg-preview.png",
-            "logo_height": 28,
+            "logo_height": 34,
             "main_menu": "main-menu",
-            "collections_menu": "",
-            "social_icons": true,
+            "collections_menu": "footer",
+            "social_icons": false,
             "pt": 2,
             "pb": 2
           }
