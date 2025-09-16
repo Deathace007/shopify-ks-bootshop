@@ -3,7 +3,6 @@
   - Replaces theme color classes with direct custom color settings.
   - Adds extensive customization options for typography, backgrounds, icons, spacing, and more.
 {% endcomment %}
-
 {%- style -%}
   #navbar-wrapper-{{ section.id }} {
     {% if section.settings.background_type == 'image' and section.settings.background_image != blank %}
@@ -66,7 +65,7 @@
     color: {{ section.settings.mobile_link_hover_color }};
   }
 
-  /* New Desktop Layout Styles */
+  /* Desktop Layout Styles */
   .desktop-nav-container-{{ section.id }} {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -80,6 +79,23 @@
     justify-self: center;
   }
   .desktop-nav-right-{{ section.id }} {
+    justify-self: end;
+  }
+
+  /* Mobile Layout Styles */
+  .mobile-nav-container-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+  }
+  .mobile-nav-left-{{ section.id }} {
+    justify-self: start;
+  }
+  .mobile-nav-center-{{ section.id }} {
+    justify-self: center;
+  }
+  .mobile-nav-right-{{ section.id }} {
     justify-self: end;
   }
 {%- endstyle -%}
@@ -99,12 +115,12 @@
         <div 
           class="container"
           style="max-width: {{ block.settings.container_max_width }}px; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; padding-left: {{ section.settings.padding_horizontal }}px; padding-right: {{ section.settings.padding_horizontal }}px;">
-          <div class="row align-items-center">
-            <div class="col-5">
+          <div class="mobile-nav-container-{{ section.id }}">
+            <div class="mobile-nav-left-{{ section.id }}">
               <ul class="nav flex-nowrap">
                 <li class="nav-item">
                   <a 
-                    class="nav-link nav-link-icon ms-n3"
+                    class="nav-link nav-link-icon"
                     href="#offcanvas-menu" 
                     data-bs-toggle="offcanvas" 
                     aria-controls="offcanvas-menu"
@@ -113,23 +129,12 @@
                     {% render 'svg-icons', icon: 'menu' %}
                   </a>
                 </li>
-                {% if shop.customer_accounts_enabled %}
-                  <li class="nav-item">
-                    <a 
-                      class="nav-link nav-link-icon {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
-                      aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
-                      href="{{ routes.account_url }}"
-                      aria-label="{{ 'general.accessibility.account' | t }}">
-                      {% render 'svg-icons', icon: 'account' %}
-                    </a>
-                  </li>
-                {% endif %}
               </ul>
             </div>
-            <div class="col-8 text-center">
+            <div class="mobile-nav-center-{{ section.id }}">
               {% render 'navbar-logo', block: block %}
             </div>
-            <div class="col-5">
+            <div class="mobile-nav-right-{{ section.id }}">
               <ul class="nav flex-nowrap justify-content-end">
                 {% if settings.search %}
                   <li class="nav-item">
@@ -144,9 +149,20 @@
                     </a>
                   </li>
                 {% endif %}
+                {% if shop.customer_accounts_enabled %}
+                  <li class="nav-item">
+                    <a 
+                      class="nav-link nav-link-icon {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
+                      aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
+                      href="{{ routes.account_url }}"
+                      aria-label="{{ 'general.accessibility.account' | t }}">
+                      {% render 'svg-icons', icon: 'account' %}
+                    </a>
+                  </li>
+                {% endif %}
                 <li class="nav-item">
                   <a 
-                    class="nav-link nav-link-icon me-n3" 
+                    class="nav-link nav-link-icon" 
                     href="#offcanvas-cart" 
                     data-bs-toggle="offcanvas" 
                     aria-controls="offcanvas-cart" 
